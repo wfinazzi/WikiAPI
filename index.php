@@ -18,10 +18,16 @@
 
     if(@$_GET['search']) {
 
-        echo $api_url = "https://en.wikipedia.org./w/api.php?format=json&action=query&prop=extracts&titles=".ucwords($_GET['search'])."&redirects=true";
-        $api_url = str_replace('','%20',$api_url);
+        $api_url = "https://pt.wikipedia.org./w/api.php?format=json&action=query&prop=extracts&titles=".rawurlencode($_GET['search'])."&redirects=true";
+        //echo $api_url = rawurlencode($api_url);
+        echo $api_url = str_replace("  ",'%20',$api_url);
+        echo "<br>";
+        echo "<br>";
 
         if($data = json_decode(@file_get_contents($api_url))){
+
+            print_r($data);
+
             foreach($data->query->pages as $key=>$val) {
                 $pageId = $key;
                 break;
